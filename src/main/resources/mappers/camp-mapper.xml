@@ -33,7 +33,11 @@
 		<result property="tourEraCl" column="TOURERACL" />
 		<result property="firstImageUrl" column="FIRSTIMAGEURL" />
 		<result property="blogCount" column="BLOGCOUNT" />
-		<result property="registAvi" column="REGISTAVI" />
+		<result property="likeCheck" column="LIKECHECK" />
+		<result property="likeCount" column="LIKECOUNT" />
+		<result property="starAvg" column="STARAVG" />
+		<result property="minPrice" column="MINPRICE" />
+		<result property="walking" column="WALKING" />
 	</resultMap>
 	<resultMap type="CampReview" id="CampReviewResultMap">
 		<id property="campReviewNo" column="CAMP_REVIEW_NO" />
@@ -61,18 +65,10 @@
 		UPDATE CAMP_TBL SET BLOGCOUNT = #{blogCount} WHERE
 		CONTENTID=#{contentId}
 	</select>
-	<!-- 캠핑장 리스트 첫번째 조회 -->
-	<!-- <select id="selectCampList" resultMap="CampResultMap"> SELECT * FROM(SELECT 
-		ROWNUM AS NUM,CAMP_TBL.* FROM CAMP_TBL <where> <if test="city != '' and city 
-		!= null"> AND DONM = #{city}</if> <if test="category != '' and category != 
-		null"> AND INDUTY LIKE '%'||#{category}||'%'</if> <if test="search != '' 
-		and search != null"> AND (facltNm LIKE '%'||#{search}||'%' or SIGUNGUNM LIKE 
-		'%'||#{search}||'%' or DONM LIKE '%'||#{search}||'%') </if> <if test='regist 
-		== "Y"'> AND REGISTAVI = #{regist} </if> </where> ) WHERE NUM BETWEEN (#{page}*10)+1 
-		AND (#{page}+1)*10 </select> -->
-	<select id="selectCampList" resultMap="CampResultMap">
+	<!-- <select id="selectCampList" resultMap="CampResultMap">
 		SELECT * FROM(SELECT ROWNUM AS NUM,A.* FROM
-		(SELECT * FROM CAMP_TBL ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
+		(SELECT * FROM CAMP_TBL
+		ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
 		<where>
 			<if test="city != '' and city != null"> AND DONM = #{city}</if>
 			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
@@ -92,11 +88,61 @@
 				WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
 			</when>
 			<otherwise>
-				WHERE NUM BETWEEN (#{page}*4)+1 AND (#{page}+1)*4
+				WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
+			</otherwise>
+		</choose>
+	</select> -->
+
+	<select id="selectCampList" resultMap="CampResultMap">
+		SELECT * FROM
+		(SELECT ROWNUM AS NUM, CAMP_TBL.* FROM
+		(SELECT * FROM CAMP_TBL
+		<where>
+			<if test="city != '' and city != null"> AND DONM = #{city}</if>
+			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
+			<if test="search != '' and search != null">
+				AND (facltNm LIKE '%'||#{search}||'%'
+				or SIGUNGUNM LIKE
+				'%'||#{search}||'%'
+				or DONM LIKE '%'||#{search}||'%')
+			</if>
+			<if test='regist == "Y"'>
+				AND REGISTAVI = #{regist}
+			</if>
+		</where>
+		ORDER BY BLOGCOUNT DESC) CAMP_TBL) T1
+	
+		LEFT JOIN
+		(select CAMP_ID, COUNT(*) AS LIKECOUNT FROM CAMP_LIKE_TBL GROUP BY CAMP_ID) T2
+		ON T1.CONTENTID = T2.CAMP_ID
+		LEFT JOIN
+		(SELECT MIN(SITE_PRICE) AS MINPRICE, CAMP_ID FROM CAMP_SITE_TBL GROUP BY
+		CAMP_ID) T3
+		ON T1.CONTENTID = T3.CAMP_ID
+		LEFT JOIN
+		(SELECT AVG(CAMP_REVIEW_STAR) AS STARAVG, CAMP_ID FROM CAMP_REVIEW_TBL GROUP
+		BY CAMP_ID) T4
+		ON T1.CONTENTID = T4.CAMP_ID
+		LEFT JOIN
+		(SELECT COUNT(*) AS WALKING, B.CAMP_ID FROM CAMP_BOOKING_TBL A,
+		CAMP_SITE_TBL B WHERE A.SITE_NO = B.SITE_NO AND A.MEMBER_ID = #{memberId}
+		GROUP BY B.CAMP_ID) T5
+		ON T1.CONTENTID = T5.CAMP_ID
+		LEFT JOIN
+		(select CAMP_ID, COUNT(*) AS LIKECHECK FROM CAMP_LIKE_TBL WHERE MEMBER_ID = #{memberId} GROUP BY CAMP_ID) T6
+		ON T1.CONTENTID = T6.CAMP_ID
+		
+		<choose>
+			<when test='type == "A"'>
+				WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
+			</when>
+			<otherwise>
+				WHERE NUM BETWEEN (#{page}*10)+1 AND (#{page}+1)*10
 			</otherwise>
 		</choose>
 	</select>
-
+	
+	
 	<select id="selectCampDetail" resultMap="CampResultMap">
 		SELECT * FROM CAMP_TBL
 		WHERE CONTENTID = #{contentId}
@@ -136,7 +182,8 @@
 	<!-- WHERE CAMP_TBL.firstImageUrl is not null -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*) FROM(SELECT ROWNUM AS NUM,A.* FROM
-		(SELECT * FROM CAMP_TBL ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
+		(SELECT * FROM
+		CAMP_TBL ORDER BY CAMP_TBL.BLOGCOUNT DESC) A
 		<where>
 			<if test="city != '' and city != null"> AND DONM = #{city}</if>
 			<if test="category != '' and category != null"> AND INDUTY LIKE '%'||#{category}||'%'</if>
@@ -204,7 +251,8 @@
 	<select id="selectWalking" resultType="_int">
 		SELECT COUNT(*) FROM
 		CAMP_BOOKING_TBL A, CAMP_SITE_TBL B
-		WHERE MEMBER_ID = #{memberId} AND B.SITE_NO = A.SITE_NO AND B.CAMP_ID =
+		WHERE MEMBER_ID = #{memberId} AND
+		B.SITE_NO = A.SITE_NO AND B.CAMP_ID =
 		#{contentId}
 	</select>
 </mapper>

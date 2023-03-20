@@ -120,7 +120,8 @@
 							var category = "";
 							var search = "";
 							var regist = "N";
-							var listUrl = "";
+							var listUrl = "/camp/campListShow.kh";
+							var scrollCheck = "list";
 
 							// 좋아요 버튼 클릭시 동작
 							function likeButton(AcontentId, AmapX, AmapY) {
@@ -174,7 +175,6 @@
 									data: {
 										"campId": data.contentId
 									},
-									async: false,
 									success: function (result) {
 										$("#likeCount-" + data.contentId + "").html(result)
 									},
@@ -194,7 +194,6 @@
 										url: "/camp/campLikeCheck.kh",
 										type: "get",
 										data: data,
-										async: false,
 										success: function (result) {
 											if (result > 0) {
 												$("#like-" + data.contentId + "").addClass("alreadyLike");
@@ -216,7 +215,8 @@
 
 							// 리스트 생성 function
 							function urlLoad() {
-								if (listUrl != "/camp/campListScroll.kh") {
+								console.log(search)
+								if (scrollCheck != "scroll") {
 									$(".word_area").html("<h5 id='searchResult'>" + city + " " + category + " " + search + " 검색결과</h5> ")
 								}
 								$.ajax({
@@ -235,7 +235,11 @@
 
 										var str = "";
 										for (var i = 0; i < data.length; i++) {
+											
 											var avg = parseFloat(data[i].starAvg).toFixed(2);
+											if(avg == 'NaN'){
+												avg = '0.00'
+											}
 											str += "<div class='camp_List' id='campsite-" + data[i].contentId + "'>"
 											str += "<a href='/camp/campDetail.kh?contentId=" + data[i].contentId + "' data-id='" + data[i].contentId + "'>"
 											if (data[i].firstImageUrl == null) {
@@ -264,15 +268,8 @@
 												str += "<div class='booking'><div style='display:flex; flex-direction: column;'><p style='font-size : 10pt; color : #dc3545'><b>예약가능</b></p><p style='font-size : 16pt;'><b>" + data[i].minPrice.toLocaleString('ko-KR') + "원~</b></p></div></div>"
 											}
 											str += "</div></div></div></div><hr>"
-											
-								
-							
-
 										}
-
-
-
-										if (listUrl == "/camp/campListScroll.kh") {
+										if (scrollCheck == "scroll") {
 											$("#list_area").append(str);
 										} else {
 											$("#list_area").html(str);
@@ -295,12 +292,11 @@
 
 							//리스트 진입시 목록 출력
 							$(document).ready(function () {
-								listUrl = "/camp/campListShow.kh";
 								urlLoad();
 							})
 							//자동 스크롤시 페이지 갱신 ajax
 							function scrollload() {
-								listUrl = "/camp/campListScroll.kh";
+								scrollCheck = "scroll"
 								// page++;
 								urlLoad();
 							}
@@ -322,7 +318,7 @@
 
 							// 예약가능 스위치 활성화
 							$("input[name='registCheck']").change(function () {
-								listUrl = "/camp/campListShow.kh";
+								scrollCheck != "list"
 								if (this.checked == true) {
 									regist = "Y"
 									if (page != 0) {
@@ -347,7 +343,7 @@
 									category = $(this).val();
 									var category1 = "\'" + $(this).val() + "\'";
 								}
-								listUrl = "/camp/campListShow.kh";
+								scrollCheck != "list"
 								if (page != 0) {
 									page = 0;
 								}
@@ -358,7 +354,7 @@
 							function searchForm() {
 								if ($(".searchForm").val().trim() != "") {
 									search = $(".searchForm").val();
-									listUrl = "/camp/campListShow.kh";
+									scrollCheck != "list"
 									if (page != 0) {
 										page = 0;
 									}

@@ -839,9 +839,9 @@
 					date = date + "";
 					var year = date.substring(0, 4) + "";
 					var month = date.substring(4, 6);
-					if (month < 10) {
+					/* if (month < 10) {
 						month = '0' + month;
-					} //10미만일 시 앞에 0을 붙혀서 저장
+					} */ //10미만일 시 앞에 0을 붙혀서 저장
 					var day = parseInt(date.substring(6, 8));
 					if (day < 10) {
 						day = '0' + day;
