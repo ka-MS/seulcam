@@ -10,29 +10,12 @@ public class SearchList {
 	private String memberId;
 	
 	public SearchList() {}
-	
-	
-
-	public SearchList(int page, String city, String category, String search, String regist, String type,
-			String memberId) {
-		this.page = page;
-		this.city = city;
-		this.category = category;
-		this.search = search;
-		this.regist = regist;
-		this.type = type;
-		this.memberId = memberId;
-	}
-
-
 
 	@Override
 	public String toString() {
 		return "SearchList [page=" + page + ", city=" + city + ", category=" + category + ", search=" + search
 				+ ", regist=" + regist + ", type=" + type + ", memberId=" + memberId + "]";
 	}
-
-
 
 	public int getPage() {
 		return page;

@@ -26,32 +26,6 @@ public class CampSite {
     
     public CampSite() {}
 
-    public CampSite(int siteNo, String siteName, int campId, String campName, String siteChar, String siteInfo,
-            String siteIntro, int standardPeople, int maxPeople, int excessCharge, int inTime, int outTime,
-            int sitePrice, int siteCount, String siteThumbnailName, String siteThumbnailPath,
-            String siteThumbnailRename, Date sCreateDate, String sStatusUse, String sStatusDel) {
-        this.siteNo = siteNo;
-        this.siteName = siteName;
-        this.campId = campId;
-        this.campName = campName;
-        this.siteChar = siteChar;
-        this.siteInfo = siteInfo;
-        this.siteIntro = siteIntro;
-        this.standardPeople = standardPeople;
-        this.maxPeople = maxPeople;
-        this.excessCharge = excessCharge;
-        this.inTime = inTime;
-        this.outTime = outTime;
-        this.sitePrice = sitePrice;
-        this.siteCount = siteCount;
-        this.siteThumbnailName = siteThumbnailName;
-        this.siteThumbnailPath = siteThumbnailPath;
-        this.siteThumbnailRename = siteThumbnailRename;
-        this.sCreateDate = sCreateDate;
-        this.sStatusUse = sStatusUse;
-        this.sStatusDel = sStatusDel;
-    }
-
     @Override
     public String toString() {
         return "CampSite [siteNo=" + siteNo + ", siteName=" + siteName + ", campId=" + campId + ", campName=" + campName

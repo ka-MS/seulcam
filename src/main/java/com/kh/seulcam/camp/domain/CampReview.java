@@ -16,20 +16,6 @@ public class CampReview {
 	
 	public CampReview() {}
 
-    public CampReview(int campReviewNo, String memberId, String memberNickname, String campId, String campName,
-            String campReviewContents, String campReviewStar, Date rCreateDate, Date rModifyDate, String imgUrl) {
-        this.campReviewNo = campReviewNo;
-        this.memberId = memberId;
-        this.memberNickname = memberNickname;
-        this.campId = campId;
-        this.campName = campName;
-        this.campReviewContents = campReviewContents;
-        this.campReviewStar = campReviewStar;
-        this.rCreateDate = rCreateDate;
-        this.rModifyDate = rModifyDate;
-        this.imgUrl = imgUrl;
-    }
-
     @Override
     public String toString() {
         return "CampReview [campReviewNo=" + campReviewNo + ", memberId=" + memberId + ", memberNickname="

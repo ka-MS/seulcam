@@ -11,16 +11,6 @@ public class BookingStatus {
     
     public BookingStatus() {}
 
-    public BookingStatus(int bookingNo, int siteNo, String memberId, String sBookDate, int totalDay) {
-        this.bookingNo = bookingNo;
-        this.siteNo = siteNo;
-        this.memberId = memberId;
-        this.sBookDate = sBookDate;
-        this.totalDay = totalDay;
-    }
-
-    
-
     @Override
     public String toString() {
         return "BookingStatus [bookingNo=" + bookingNo + ", siteNo=" + siteNo + ", memberId=" + memberId

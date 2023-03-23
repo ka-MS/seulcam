@@ -32,33 +32,6 @@ public class CampBooking {
     
     public CampBooking() {}
 
-
-    public CampBooking(int bookingNo, String memberId, int siteNo, String bookName, String bookPhone,
-            String bookRequest, int bookPeople, String firstDay, String lastDay, int totalDay, int bookIniPrice,
-            int bookExtra, int bookUsePoint, int bookGetPoint, int bookTotalPrice, Date bookDate, String bookPayStatus,
-            String bookCancleStatus, String bookRefundStatus) {
-        this.bookingNo = bookingNo;
-        this.memberId = memberId;
-        this.siteNo = siteNo;
-        this.bookName = bookName;
-        this.bookPhone = bookPhone;
-        this.bookRequest = bookRequest;
-        this.bookPeople = bookPeople;
-        this.firstDay = firstDay;
-        this.lastDay = lastDay;
-        this.totalDay = totalDay;
-        this.bookIniPrice = bookIniPrice;
-        this.bookExtra = bookExtra;
-        this.bookUsePoint = bookUsePoint;
-        this.bookGetPoint = bookGetPoint;
-        this.bookTotalPrice = bookTotalPrice;
-        this.bookDate = bookDate;
-        this.bookPayStatus = bookPayStatus;
-        this.bookCancleStatus = bookCancleStatus;
-        this.bookRefundStatus = bookRefundStatus;
-    }
-
-
     @Override
     public String toString() {
         return "CampBooking [bookingNo=" + bookingNo + ", memberId=" + memberId + ", siteNo=" + siteNo + ", bookName="

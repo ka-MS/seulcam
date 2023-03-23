@@ -13,23 +13,7 @@ public class CampLike {
 	private String campAddr;
 	
 	
-	
 	public CampLike() {}
-
-
-
-    public CampLike(String memberId, String campId, String mapX, String mapY, Date campLikeDate, String imgUrl,
-            String campName, String campAddr) {
-        this.memberId = memberId;
-        this.campId = campId;
-        this.mapX = mapX;
-        this.mapY = mapY;
-        this.campLikeDate = campLikeDate;
-        this.imgUrl = imgUrl;
-        this.campName = campName;
-        this.campAddr = campAddr;
-    }
-
 
 
     @Override

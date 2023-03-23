@@ -41,52 +41,6 @@ public class Camp {
 	
 	public Camp() {}
 
-
-
-    public Camp(int contentId, String facltNm, String lineIntro, String intro, String bizrno, String featureNm,
-            String induty, String lctCl, String doNm, String sigunguNm, String zipcode, String addr1, String tel,
-            String mapX, String mapY, String homepage, String resveUrl, String tooltip, String glampInnerFclty,
-            String caravInnerFclty, String operPdCl, String operDeCl, String sbrsCl, String sbrsEtc, String animalCmgCl,
-            String tourEraCl, String firstImageUrl, int blogCount, String registAvi, int likeCheck, int likeCount,
-            String starAvg, int minPrice, int walking) {
-        this.contentId = contentId;
-        this.facltNm = facltNm;
-        this.lineIntro = lineIntro;
-        this.intro = intro;
-        this.bizrno = bizrno;
-        this.featureNm = featureNm;
-        this.induty = induty;
-        this.lctCl = lctCl;
-        this.doNm = doNm;
-        this.sigunguNm = sigunguNm;
-        this.zipcode = zipcode;
-        this.addr1 = addr1;
-        this.tel = tel;
-        this.mapX = mapX;
-        this.mapY = mapY;
-        this.homepage = homepage;
-        this.resveUrl = resveUrl;
-        this.tooltip = tooltip;
-        this.glampInnerFclty = glampInnerFclty;
-        this.caravInnerFclty = caravInnerFclty;
-        this.operPdCl = operPdCl;
-        this.operDeCl = operDeCl;
-        this.sbrsCl = sbrsCl;
-        this.sbrsEtc = sbrsEtc;
-        this.animalCmgCl = animalCmgCl;
-        this.tourEraCl = tourEraCl;
-        this.firstImageUrl = firstImageUrl;
-        this.blogCount = blogCount;
-        this.registAvi = registAvi;
-        this.likeCheck = likeCheck;
-        this.likeCount = likeCount;
-        this.starAvg = starAvg;
-        this.minPrice = minPrice;
-        this.walking = walking;
-    }
-
-
-
     @Override
     public String toString() {
         return "Camp [contentId=" + contentId + ", facltNm=" + facltNm + ", lineIntro=" + lineIntro + ", intro=" + intro
