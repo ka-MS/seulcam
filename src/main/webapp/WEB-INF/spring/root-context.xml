@@ -32,7 +32,7 @@
 <!-- ajax를 처리할 resolver의 load 순서를 0으로 하여 먼저 인식하도록 함  -->
 
 <bean id="beanNameResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
-<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
     <property name="contentType" value="application/json;charset=UTF-8"></property>
 </bean>
 

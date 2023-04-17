@@ -122,57 +122,7 @@ public class CampController {
 		}
 		return new Gson().toJson(cList);
 	}
-//    @ResponseBody
-//    @RequestMapping(value = "/camp/campListShow.kh", produces = "application/json;charset=utf-8", method = RequestMethod.GET)
-//    public String campListShowTest(
-//            @ModelAttribute SearchList sList,
-//            HttpServletRequest request,
-//            HttpSession session) {
-//        try {
-//            List<Camp> cList = cService.printCampList(sList);
-//            int result = cService.printListCount(sList);
-//            if (!cList.isEmpty()) {
-//                cList.get(0).setBlogCount(result);
-//            }
-//            Member member = (Member) session.getAttribute("loginUser");
-//            for (int i = 0; i < cList.size(); i++) {
-//                // 캠핑장 좋아요
-//                CampLike campLike = new CampLike();
-//                campLike.setCampId(cList.get(i).getContentId() + "");
-//                // 좋아요 갯수
-//                Integer likeCount = cService.campLikeCount(campLike);
-//                Integer likeCheck = 0;
-//                int walking =0;
-//                if (member != null) {
-//                    String memberId = member.getMemberId();
-//                    campLike.setMemberId(memberId);
-//                    likeCheck = cService.campLikeCount(campLike);
-//                    walking = cService.countWalking(cList.get(i).getContentId(),memberId);
-//                }
-//                Integer minPrice = cService.campMinPrice(cList.get(i).getContentId());
-//                ;
-//                if (minPrice == null) {
-//                    minPrice = 0;
-//                }
-//                // 별점평균
-//                String starAvg = cService.printStarAvg(cList.get(i).getContentId());
-//                if (starAvg == null) {
-//                    starAvg = "0";
-//                }
-//                cList.get(i).setWalking(walking);
-//                cList.get(i).setMinPrice(minPrice);
-//                cList.get(i).setStarAvg(starAvg);
-//                cList.get(i).setLikeCheck(likeCheck);
-//                cList.get(i).setLikeCount(likeCount);
-//            }
-//            System.out.println(cList);
-//            return new Gson().toJson(cList);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            request.setAttribute("msg", "리스트 출력 실패");
-//            return "common/errorPage";
-//        }
-//    }
+
 
 	// 캠핑장 댓글 별점 카운트
 	@ResponseBody
