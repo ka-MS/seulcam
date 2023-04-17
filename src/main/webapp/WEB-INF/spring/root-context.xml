@@ -63,23 +63,28 @@
      	</property>
     </bean>
 	
-	<!-- <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"></property>
-	</bean> -->
+	<!-- 트랜잭션 매니저 빈등록 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 	
 	<!-- 트랜잭션 XML 방식 -->
-<!-- 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="print*" read-only="true"/> read
-			<tx:method name="register*" rollback-for="Exception"/> create
-			<tx:method name="modify*" rollback-for="Exception"/> update
-			<tx:method name="remove*" rollback-for="Exception"/> delete
+			<tx:method name="print*" read-only="true"/> 
+			<tx:method name="register*" rollback-for="Exception"/> 
+			<tx:method name="modify*" rollback-for="Exception"/> 
+			<tx:method name="remove*" rollback-for="Exception"/> 
+			<tx:method name="create*" rollback-for="Exception"/> 
+			<tx:method name="regist*" rollback-for="Exception"/> 
+			<tx:method name="campBooking*" rollback-for="Exception"/> 
+			<tx:method name="booking*" rollback-for="Exception"/> 
 		</tx:attributes>
 	</tx:advice>
 	
-	aop 적용
+	<!-- aop등록 -->
 	<aop:config proxy-target-class="true">
 		<aop:pointcut expression="execution(* com.kh.seulcam..*Impl.*(..))" id="serviceMethod"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
-	</aop:config> -->
+	</aop:config>
 </beans>

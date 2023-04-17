@@ -4,12 +4,19 @@ import java.sql.Date;
 
 public class BookingStatus {
     private int bookingNo;
-    private int siteNo;
+    private Integer siteNo;
     private String memberId;
     private String sBookDate;
     private int totalDay;
     
     public BookingStatus() {}
+    
+    public BookingStatus(Integer siteNo,String memberId,String sBookDate,int totalDay) {
+    	this.memberId = memberId;
+        this.sBookDate = sBookDate;
+        this.siteNo = siteNo;
+        this.totalDay = totalDay;
+    }
 
     @Override
     public String toString() {
@@ -29,7 +36,7 @@ public class BookingStatus {
         return siteNo;
     }
 
-    public void setSiteNo(int siteNo) {
+    public void setSiteNo(Integer siteNo) {
         this.siteNo = siteNo;
     }
 

@@ -161,54 +161,61 @@ public class CampBookingController {
 
 	}
 
-	// 캠핑장 예약
+//	// 캠핑장 예약
+//	@ResponseBody
+//	@RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST)
+//	public String campBookingRegist(HttpServletRequest request, @ModelAttribute OrderPay orderPay,
+//			@ModelAttribute CampBooking cBooking) {
+//
+//		// 잔여좌석 없으면 예약안되도록 분해
+//		bookingStatusSearch bss = new bookingStatusSearch(
+//				cBooking.getSiteNo(),
+//				cBooking.getFirstDay(),
+//				cBooking.getLastDay());
+//		String resultbss = bService.bookingCount(bss);
+//		if (resultbss != null) {
+//			if (Integer.parseInt(resultbss) < 1) {
+//				return "fail";
+//			}
+//		}
+//
+//		// 예약저장
+//		int result = bService.campBookingRegist(cBooking);
+//		int bookingNo = cBooking.getBookingNo();
+//		// 결제테이블에 정보 넣기
+//		orderPay.setOrderNo(bookingNo);
+//		int result4 = oService.registOrderPrice(orderPay);
+//		// 포인트 차감
+//		Point pointUse = new Point();
+//		pointUse.setMemberId(cBooking.getMemberId());
+//		pointUse.setPoint(cBooking.getBookUsePoint() + "");
+//		int result2 = oService.registUsePoint(pointUse);
+//		// 포인트 적립
+//		Point pointAdd = new Point();
+//		pointAdd.setMemberId(cBooking.getMemberId());
+//		pointAdd.setPoint(cBooking.getBookGetPoint() + "");
+//		int result3 = oService.registGetPoint(pointAdd.getPoint(), pointAdd.getMemberId());
+//
+//		// 예약 현황 저장
+//		BookingStatus bs = new BookingStatus(
+//				cBooking.getSiteNo(),
+//				cBooking.getMemberId(),
+//				cBooking.getFirstDay(),
+//				cBooking.getTotalDay() - 1);
+//		int bsInsert = bService.bookingStatus(bs);
+//
+//		return bookingNo + "";
+//
+//	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/campBooking/campBooking.kh", method = RequestMethod.POST)
 	public String campBookingRegist(HttpServletRequest request, @ModelAttribute OrderPay orderPay,
-			@ModelAttribute CampBooking cBooking) {
+	        @ModelAttribute CampBooking cBooking) {
 
-		// 잔여좌석 없으면 예약안되도록 분해
-		bookingStatusSearch bss = new bookingStatusSearch();
-		bss.setFirstDay(cBooking.getFirstDay());
-		bss.setLastDay(cBooking.getLastDay());
-		bss.setSiteNo(cBooking.getSiteNo());
-		String resultbss = bService.bookingCount(bss);
-		if (resultbss != null) {
-			if (Integer.parseInt(resultbss) < 1) {
-				return "fail";
-			}
-		}
-
-		// 예약저장
-		int result = bService.campBookingRegist(cBooking);
-		int bookingNo = cBooking.getBookingNo();
-		// 결제테이블에 정보 넣기
-		orderPay.setOrderNo(bookingNo);
-		int result4 = oService.registOrderPrice(orderPay);
-		// 포인트 차감
-		Point pointUse = new Point();
-		pointUse.setMemberId(cBooking.getMemberId());
-		pointUse.setPoint(cBooking.getBookUsePoint() + "");
-		int result2 = oService.registUsePoint(pointUse);
-		// 포인트 적립
-		Point pointAdd = new Point();
-		pointAdd.setMemberId(cBooking.getMemberId());
-		pointAdd.setPoint(cBooking.getBookGetPoint() + "");
-		int result3 = oService.registGetPoint(pointAdd.getPoint(), pointAdd.getMemberId());
-
-		// 예약 현황 저장
-		int bsInsert = 0;
-		BookingStatus bs = new BookingStatus();
-		bs.setMemberId(cBooking.getMemberId());
-		bs.setsBookDate(cBooking.getFirstDay());
-		bs.setSiteNo(cBooking.getSiteNo());
-		bs.setTotalDay(cBooking.getTotalDay() - 1);
-		if (result == 1) {
-			bsInsert = bService.bookingStatus(bs);
-		}
-
-		return bookingNo + "";
-
+	    // 예약저장, 포인트 차감 및 적립, 예약 현황 저장 로직을 서비스 계층으로 이동
+	    String bookingNo = bService.createReservation(cBooking, orderPay);
+	    return bookingNo;
 	}
 
 	// 캠핑장 예약 완료창

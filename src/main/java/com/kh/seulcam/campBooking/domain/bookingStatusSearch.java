@@ -4,6 +4,13 @@ public class bookingStatusSearch {
     private int siteNo;
     private String firstDay;
     private String lastDay;
+    
+    public bookingStatusSearch() {}
+    public bookingStatusSearch(int siteNo,String firstDay,String lastDay) {
+    	this.siteNo = siteNo;
+    	this.firstDay = firstDay;
+    	this.lastDay = lastDay;
+    }
     @Override
     public String toString() {
         return "bookingStatusSearch [siteNo=" + siteNo + ", firstDay=" + firstDay + ", lastDay=" + lastDay + "]";
