@@ -916,7 +916,7 @@
 							var kh = new Date(currentYear, currentMonth, i)
 							if (thisMonth.getMonth() == today.getMonth() && i < today.getDate()) {
 								calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="' + getFormatDate(kh) + '">' + i + '</div>'
-							} else if (thisMonth.getMonth() < today.getMonth() && currentYear <= today.getFullYear()) {
+							} else if ((thisMonth.getMonth() < today.getMonth() && currentYear <= today.getFullYear()) || currentYear < today.getFullYear()) {
 								calendar.innerHTML = calendar.innerHTML + '<div class="day current disable" id="' + getFormatDate(kh) + '">' + i + '</div>'
 							} else {
 								calendar.innerHTML = calendar.innerHTML + '<div class="day current" id="' + getFormatDate(kh) + '" onclick="clickDate(' + getFormatDate(kh) + ')"><input type="hidden" value="' + kh + '">' + i + '</div>'

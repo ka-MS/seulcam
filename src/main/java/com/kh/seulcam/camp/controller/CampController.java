@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.seulcam.camp.domain.Camp;
 import com.kh.seulcam.camp.domain.CampLike;
+import com.kh.seulcam.camp.domain.CampListResponse;
 import com.kh.seulcam.camp.domain.SearchList;
 import com.kh.seulcam.camp.domain.CampReview;
 import com.kh.seulcam.camp.domain.CampSite;
@@ -63,48 +64,48 @@ public class CampController {
 		return "camp/campList";
 	}
 
-	// 캠핑장 상세페이지
-	@RequestMapping(value = "/camp/campDetail.kh", method = RequestMethod.GET)
-	public ModelAndView campDetail(@RequestParam(value = "contentId", required = false) int contentId, ModelAndView mv,
-			HttpSession session) {
-		// 캠프 데이터
-		Camp camp = cService.printCampDetail(contentId);
-		// 별점 평균
-		String starAvg = cService.printStarAvg(contentId);
-		if (starAvg == null) {
-			starAvg = "0.0";
-		}
-		// 좋아요 체크
-		CampLike campLike = new CampLike();
-		campLike.setCampId(contentId + "");
-		// 좋아요 갯수체크
-		Integer likeCount = cService.campLikeCount(campLike);
-		Member member = (Member) session.getAttribute("loginUser");
-		Integer likeCheck = 0;
-		int walking = 0;
-		// 최소 가격 체크
-
-		Integer minPrice;
-		if (camp.getRegistAvi() == "Y") {
-			minPrice = cService.campMinPrice(contentId);
-			camp.setMinPrice(minPrice);
-		}
-
-		// 캠프 정보 외 데이터 삽입
-		if (member != null) {
-			String memberId = member.getMemberId();
-			campLike.setMemberId(memberId);
-			walking = cService.countWalking(contentId, memberId);
-		}
-		mv.addObject("walking", walking);
-		mv.addObject("starAvg", starAvg);
-		mv.addObject("likeCheck", likeCheck);
-		mv.addObject("likeCount", likeCount);
-		mv.addObject("camp", camp);
-		mv.setViewName("camp/campDetail");
-
-		return mv;
-	}
+//	// 캠핑장 상세페이지
+//	@RequestMapping(value = "/camp/campDetail.kh", method = RequestMethod.GET)
+//	public ModelAndView campDetail(@RequestParam(value = "contentId", required = false) int contentId, ModelAndView mv,
+//			HttpSession session) {
+//		// 캠프 데이터
+//		Camp camp = cService.printCampDetail(contentId);
+//		// 별점 평균
+//		String starAvg = cService.printStarAvg(contentId);
+//		if (starAvg == null) {
+//			starAvg = "0.0";
+//		}
+//		// 좋아요 체크
+//		CampLike campLike = new CampLike();
+//		campLike.setCampId(contentId + "");
+//		// 좋아요 갯수체크
+//		Integer likeCount = cService.campLikeCount(campLike);
+//		Member member = (Member) session.getAttribute("loginUser");
+//		Integer likeCheck = 0;
+//		int walking = 0;
+//		// 최소 가격 체크
+//
+//		Integer minPrice;
+//		if (camp.getRegistAvi() == "Y") {
+//			minPrice = cService.campMinPrice(contentId);
+//			camp.setMinPrice(minPrice);
+//		}
+//
+//		// 캠프 정보 외 데이터 삽입
+//		if (member != null) {
+//			String memberId = member.getMemberId();
+//			campLike.setMemberId(memberId);
+//			walking = cService.countWalking(contentId, memberId);
+//		}
+//		mv.addObject("walking", walking);
+//		mv.addObject("starAvg", starAvg);
+//		mv.addObject("likeCheck", likeCheck);
+//		mv.addObject("likeCount", likeCount);
+//		mv.addObject("camp", camp);
+//		mv.setViewName("camp/campDetail");
+//
+//		return mv;
+//	}
 
 	// 캠핑장 리스트 출력
 	// 캠핑장 리스트 스크롤시 비동기 다음 페이지 출력
@@ -115,12 +116,11 @@ public class CampController {
 		Member member = (Member) session.getAttribute("loginUser");
 		if (member != null)
 			sList.setMemberId(member.getMemberId());
-		List<Camp> cList = cService.printCampList(sList);
-		int result = cService.printListCount(sList);
-		if (!cList.isEmpty()) {
-			cList.get(0).setBlogCount(result);
-		}
-		return new Gson().toJson(cList);
+		CampListResponse response = new CampListResponse(
+				cService.printCampList(sList),
+				cService.printListCount(sList)
+				);
+		return new Gson().toJson(response);
 	}
 
 
